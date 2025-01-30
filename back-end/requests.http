@@ -1,0 +1,176 @@
+### Variables
+@baseUrl = http://localhost:8080/api/v1
+@authToken = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huZG9lIiwiaWF0IjoxNzM4MjMyMDc3LCJleHAiOjE3MzgzMTg0Nzd9.3dkbmPQpgi4XSvLKn-GW3_BXRki68MELxUWjjXX3gow
+
+### Authentication Controller ###
+
+### Register a new user
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+    "username": "johndoe",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "password": "password123"
+}
+
+### Login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "username": "johndoe",
+    "password": "password123"
+}
+
+### User Controller ###
+
+### Get current user profile
+GET {{baseUrl}}/users/me
+Authorization: Bearer {{authToken}}
+
+### Get user profile by username
+GET {{baseUrl}}/users/johndoe
+Authorization: Bearer {{authToken}}
+
+### Update user profile
+PUT {{baseUrl}}/users/1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "name": "John Doe Updated",
+    "email": "john.updated@example.com",
+    "bio": "Software Developer",
+    "profilePicture": "https://example.com/profile.jpg",
+    "newPassword": "newpassword123",
+    "currentPassword": "password123"
+}
+
+### Follow a user
+POST {{baseUrl}}/users/2/follow
+Authorization: Bearer {{authToken}}
+
+### Unfollow a user
+DELETE {{baseUrl}}/users/2/unfollow
+Authorization: Bearer {{authToken}}
+
+### Get user's followers
+GET {{baseUrl}}/users/1/followers
+Authorization: Bearer {{authToken}}
+
+### Get user's following
+GET {{baseUrl}}/users/1/following
+Authorization: Bearer {{authToken}}
+
+### Post Controller ###
+
+### Get all posts (paginated)
+GET {{baseUrl}}/posts?page=0&size=10&sort=createdAt,desc
+Authorization: Bearer {{authToken}}
+
+### Get user feed
+GET {{baseUrl}}/posts/feed?page=0&size=10&sort=createdAt,desc
+Authorization: Bearer {{authToken}}
+
+### Get posts by user
+GET {{baseUrl}}/posts/user/johndoe?page=0&size=10&sort=createdAt,desc
+Authorization: Bearer {{authToken}}
+
+### Get posts by tag
+GET {{baseUrl}}/posts/tag/programming?page=0&size=10&sort=createdAt,desc
+Authorization: Bearer {{authToken}}
+
+### Search posts
+GET {{baseUrl}}/posts/search?query=spring&page=0&size=10&sort=createdAt,desc
+Authorization: Bearer {{authToken}}
+
+### Get single post
+GET {{baseUrl}}/posts/1
+Authorization: Bearer {{authToken}}
+
+### Create new post
+POST {{baseUrl}}/posts
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "title": "Getting Started with Spring Boot",
+    "content": "Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications.",
+    "tags": ["spring", "java", "programming"],
+    "coverImage": "https://example.com/cover.jpg",
+    "published": true
+}
+
+### Update post
+PUT {{baseUrl}}/posts/1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "title": "Updated: Getting Started with Spring Boot",
+    "content": "Updated content here...",
+    "tags": ["spring", "java", "tutorial"],
+    "coverImage": "https://example.com/new-cover.jpg",
+    "published": true
+}
+
+### Delete post
+DELETE {{baseUrl}}/posts/1
+Authorization: Bearer {{authToken}}
+
+### Like post
+POST {{baseUrl}}/posts/1/like
+Authorization: Bearer {{authToken}}
+
+### Unlike post
+DELETE {{baseUrl}}/posts/1/like
+Authorization: Bearer {{authToken}}
+
+### Bookmark post
+POST {{baseUrl}}/posts/1/bookmark
+Authorization: Bearer {{authToken}}
+
+### Remove bookmark
+DELETE {{baseUrl}}/posts/1/bookmark
+Authorization: Bearer {{authToken}}
+
+### Response Examples ###
+
+### Successful Response Example
+# {
+#     "status": 200,
+#     "data": {
+#         "id": 1,
+#         "title": "Sample Post",
+#         "content": "Content here..."
+#     }
+# }
+
+### Error Response Example
+# {
+#     "status": 400,
+#     "error": "Bad Request",
+#     "message": "Invalid input",
+#     "path": "/api/v1/posts"
+# }
+
+### Validation Error Example
+# {
+#     "status": 400,
+#     "message": "Validation failed",
+#     "errors": {
+#         "title": "Title is required",
+#         "content": "Content must not be empty"
+#     },
+#     "timestamp": "2024-01-30T12:00:00"
+# }
+
+### Authentication Error Example
+# {
+#     "status": 401,
+#     "error": "Unauthorized",
+#     "message": "Invalid credentials",
+#     "path": "/api/v1/auth/login"
+# } 
