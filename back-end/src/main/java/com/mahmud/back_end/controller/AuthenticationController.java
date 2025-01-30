@@ -1,8 +1,6 @@
 package com.mahmud.back_end.controller;
 
-import com.mahmud.back_end.dto.auth.AuthResponse;
-import com.mahmud.back_end.dto.auth.LoginRequest;
-import com.mahmud.back_end.dto.auth.RegisterRequest;
+import com.mahmud.back_end.dto.auth.*;
 import com.mahmud.back_end.service.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,5 +26,21 @@ public class AuthenticationController {
             @Valid @RequestBody LoginRequest request
     ) {
         return ResponseEntity.ok(authenticationService.login(request));
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<Void> requestPasswordReset(
+            @Valid @RequestBody PasswordResetRequest request
+    ) {
+        authenticationService.requestPasswordReset(request);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<Void> resetPassword(
+            @Valid @RequestBody PasswordResetConfirmRequest request
+    ) {
+        authenticationService.confirmPasswordReset(request);
+        return ResponseEntity.ok().build();
     }
 } 

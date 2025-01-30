@@ -24,6 +24,23 @@ Content-Type: application/json
     "password": "password123"
 }
 
+### Request Password Reset
+POST {{baseUrl}}/auth/forgot-password
+Content-Type: application/json
+
+{
+    "email": "john@example.com"
+}
+
+### Reset Password
+POST {{baseUrl}}/auth/reset-password
+Content-Type: application/json
+
+{
+    "token": "your-reset-token-here",
+    "newPassword": "newpassword123"
+}
+
 ### User Controller ###
 
 ### Get current user profile
