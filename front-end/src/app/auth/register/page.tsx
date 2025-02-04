@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { MainNav } from "@/components/main-nav"
@@ -8,12 +8,21 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Footer } from "@/components/footer"
 
 export default function RegisterPage() {
   const router = useRouter()
   const { toast } = useToast()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    // Check if user is already logged in
+    const token = localStorage.getItem("token")
+    if (token) {
+      router.push("/")
+    }
+  }, [router])
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -58,7 +67,7 @@ export default function RegisterPage() {
     <div className="relative flex min-h-screen flex-col">
       <MainNav />
       <main className="flex-1">
-        <div className="container flex h-screen w-screen flex-col items-center justify-center">
+        <div className="container flex h-[calc(100vh-4rem)] w-screen flex-col items-center justify-center">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
@@ -119,7 +128,7 @@ export default function RegisterPage() {
                     required
                   />
                 </div>
-                <Button disabled={loading}>
+                <Button disabled={loading} className="w-full">
                   {loading && (
                     <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-background border-t-foreground" />
                   )}
@@ -139,12 +148,13 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            <Button variant="outline" asChild>
+            <Button variant="outline" asChild className="w-full">
               <Link href="/auth/login">Sign in to existing account</Link>
             </Button>
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   )
 } 

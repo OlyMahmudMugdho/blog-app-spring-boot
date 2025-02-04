@@ -10,6 +10,19 @@ const config = {
     "./src/**/*.{ts,tsx}",
   ],
   theme: {
+    container: {
+      center: true,
+      padding: {
+        DEFAULT: "1rem",
+        sm: "2rem",
+        lg: "4rem",
+        xl: "5rem",
+        "2xl": "6rem",
+      },
+      screens: {
+        "2xl": "1400px",
+      },
+    },
   	extend: {
   		colors: {
   			background: 'hsl(var(--background))',
@@ -59,8 +72,25 @@ const config = {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		fontFamily: {
-  			sans: ["var(--font-sans)", ...fontFamily.sans],
+  			sans: ["var(--font-roboto)", ...fontFamily.sans],
+        heading: ["var(--font-roboto)", ...fontFamily.sans],
   		},
+      fontSize: {
+        "2xs": ["0.75rem", { lineHeight: "1.25rem" }],
+        xs: ["0.8125rem", { lineHeight: "1.5rem" }],
+        sm: ["0.875rem", { lineHeight: "1.5rem" }],
+        base: ["1rem", { lineHeight: "1.75rem" }],
+        lg: ["1.125rem", { lineHeight: "1.75rem" }],
+        xl: ["1.25rem", { lineHeight: "1.75rem" }],
+        "2xl": ["1.5rem", { lineHeight: "2rem" }],
+        "3xl": ["1.875rem", { lineHeight: "2.25rem" }],
+        "4xl": ["2.25rem", { lineHeight: "2.5rem" }],
+        "5xl": ["3rem", { lineHeight: "3.5rem" }],
+        "6xl": ["3.75rem", { lineHeight: "1" }],
+        "7xl": ["4.5rem", { lineHeight: "1" }],
+        "8xl": ["6rem", { lineHeight: "1" }],
+        "9xl": ["8rem", { lineHeight: "1" }],
+      },
   		keyframes: {
   			"accordion-down": {
   				from: { height: "0" },
@@ -75,6 +105,77 @@ const config = {
   			"accordion-down": "accordion-down 0.2s ease-out",
   			"accordion-up": "accordion-up 0.2s ease-out",
   		},
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: '100ch',
+            color: 'hsl(var(--foreground))',
+            fontFamily: 'var(--font-roboto)',
+            a: {
+              color: 'hsl(var(--primary))',
+              '&:hover': {
+                color: 'hsl(var(--primary))',
+              },
+            },
+            '[class~="lead"]': {
+              color: 'hsl(var(--foreground))',
+            },
+            strong: {
+              color: 'hsl(var(--foreground))',
+              fontWeight: '600',
+            },
+            'ol > li::marker': {
+              color: 'hsl(var(--foreground))',
+            },
+            'ul > li::marker': {
+              color: 'hsl(var(--foreground))',
+            },
+            hr: {
+              borderColor: 'hsl(var(--border))',
+            },
+            blockquote: {
+              borderLeftColor: 'hsl(var(--border))',
+              color: 'hsl(var(--foreground))',
+            },
+            h1: {
+              color: 'hsl(var(--foreground))',
+              fontWeight: '600',
+            },
+            h2: {
+              color: 'hsl(var(--foreground))',
+              fontWeight: '600',
+            },
+            h3: {
+              color: 'hsl(var(--foreground))',
+              fontWeight: '600',
+            },
+            h4: {
+              color: 'hsl(var(--foreground))',
+              fontWeight: '600',
+            },
+            'figure figcaption': {
+              color: 'hsl(var(--muted-foreground))',
+            },
+            code: {
+              color: 'hsl(var(--foreground))',
+            },
+            'a code': {
+              color: 'hsl(var(--primary))',
+            },
+            pre: {
+              backgroundColor: 'hsl(var(--muted))',
+              color: 'hsl(var(--foreground))',
+            },
+            thead: {
+              color: 'hsl(var(--foreground))',
+              borderBottomColor: 'hsl(var(--border))',
+            },
+            'tbody tr': {
+              borderBottomColor: 'hsl(var(--border))',
+            },
+          },
+        },
+      },
   	}
   },
   plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],

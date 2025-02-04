@@ -33,6 +33,7 @@ public class Post extends BaseEntity {
 
     @ElementCollection
     @CollectionTable(name = "post_tags")
+    @Builder.Default
     private Set<String> tags = new HashSet<>();
 
     @ManyToMany
@@ -41,6 +42,7 @@ public class Post extends BaseEntity {
         joinColumns = @JoinColumn(name = "post_id"),
         inverseJoinColumns = @JoinColumn(name = "user_id")
     )
+    @Builder.Default
     private Set<User> likes = new HashSet<>();
 
     @ManyToMany
@@ -49,6 +51,7 @@ public class Post extends BaseEntity {
         joinColumns = @JoinColumn(name = "post_id"),
         inverseJoinColumns = @JoinColumn(name = "user_id")
     )
+    @Builder.Default
     private Set<User> bookmarks = new HashSet<>();
 
     private String coverImage;

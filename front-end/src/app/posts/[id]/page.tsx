@@ -8,9 +8,6 @@ import Image from "next/image"
 import dynamic from "next/dynamic"
 import { formatDistanceToNow } from "date-fns"
 import { Heart, Bookmark } from "lucide-react"
-import { MainNav } from "@/components/main-nav"
-import { Button } from "@/components/ui/button"
-import { useToast } from "@/hooks/use-toast"
 
 const MarkdownPreview = dynamic(
   () => import("@uiw/react-markdown-preview").then((mod) => mod.default),
