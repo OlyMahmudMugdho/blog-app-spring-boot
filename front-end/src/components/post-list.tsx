@@ -202,7 +202,7 @@ export function PostList() {
           )}
           <div className="flex items-center space-x-4">
             <Link
-              href={`/users/${post.author.username}`}
+              href={`/profile/${post.author.username}`}
               className="flex items-center space-x-2"
             >
               {post.author.profilePicture ? (

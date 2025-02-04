@@ -8,6 +8,9 @@ import Image from "next/image"
 import dynamic from "next/dynamic"
 import { formatDistanceToNow } from "date-fns"
 import { Heart, Bookmark } from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
+import { MainNav } from "@/components/main-nav"
+import { Button } from "@/components/ui/button"
 
 const MarkdownPreview = dynamic(
   () => import("@uiw/react-markdown-preview").then((mod) => mod.default),
@@ -37,6 +40,7 @@ export default function PostPage() {
   const [post, setPost] = useState<Post | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
+  const [theme, setTheme] = useState("light")
 
   useEffect(() => {
     fetchPost()
@@ -213,7 +217,7 @@ export default function PostPage() {
           )}
           <div className="flex items-center space-x-4 mb-8">
             <Link
-              href={`/users/${post.author.username}`}
+              href={`/profile/${post.author.username}`}
               className="flex items-center space-x-2"
             >
               {post.author.profilePicture ? (
@@ -254,7 +258,7 @@ export default function PostPage() {
             ))}
           </div>
           <div className="prose dark:prose-invert max-w-none mb-8">
-            <div data-color-mode="light">
+            <div data-color-mode={theme === "dark" ? "dark" : "light"}>
               <MarkdownPreview source={post.content} />
             </div>
           </div>

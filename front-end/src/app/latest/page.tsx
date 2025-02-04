@@ -8,6 +8,7 @@ import { Heart, Bookmark } from "lucide-react"
 import { MainNav } from "@/components/main-nav"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/hooks/use-toast"
+import { Footer } from "@/components/footer"
 
 interface Post {
   id: number
@@ -26,38 +27,47 @@ interface Post {
   bookmarked: boolean
 }
 
-export default function ReadingListPage() {
+interface PageResponse {
+  content: Post[]
+  totalPages: number
+  totalElements: number
+  size: number
+  number: number
+}
+
+export default function LatestPage() {
   const { toast } = useToast()
   const [posts, setPosts] = useState<Post[]>([])
+  const [page, setPage] = useState(0)
+  const [totalPages, setTotalPages] = useState(0)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
 
   useEffect(() => {
-    fetchBookmarkedPosts()
-  }, [])
+    fetchPosts()
+  }, [page])
 
-  async function fetchBookmarkedPosts() {
+  async function fetchPosts() {
     try {
       const token = localStorage.getItem("token")
-      if (!token) {
-        throw new Error("You must be logged in to view your reading list")
-      }
-
       const response = await fetch(
-        "http://localhost:8080/api/v1/posts/bookmarked",
+        `http://localhost:8080/api/v1/posts?page=${page}&size=10&sort=createdAt,desc`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: token
+            ? {
+                Authorization: `Bearer ${token}`,
+              }
+            : {},
         }
       )
 
       if (!response.ok) {
-        throw new Error("Failed to fetch bookmarked posts")
+        throw new Error("Failed to fetch posts")
       }
 
-      const data = await response.json()
-      setPosts(data)
+      const data: PageResponse = await response.json()
+      setPosts(data.content)
+      setTotalPages(data.totalPages)
     } catch (error) {
       setError(error instanceof Error ? error.message : "Something went wrong")
     } finally {
@@ -116,22 +126,26 @@ export default function ReadingListPage() {
     }
   }
 
-  async function handleRemoveBookmark(postId: number) {
+  async function handleBookmark(postId: number) {
     try {
       const token = localStorage.getItem("token")
       if (!token) {
         toast({
           title: "Error",
-          description: "You must be logged in to manage your reading list",
+          description: "You must be logged in to bookmark posts",
           variant: "destructive",
         })
         return
       }
 
+      const post = posts.find((p) => p.id === postId)
+      if (!post) return
+
+      const method = post.bookmarked ? "DELETE" : "POST"
       const response = await fetch(
         `http://localhost:8080/api/v1/posts/${postId}/bookmark`,
         {
-          method: "DELETE",
+          method,
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -139,20 +153,31 @@ export default function ReadingListPage() {
       )
 
       if (!response.ok) {
-        throw new Error("Failed to remove bookmark")
+        throw new Error("Failed to bookmark post")
       }
 
-      setPosts((prevPosts) => prevPosts.filter((p) => p.id !== postId))
+      setPosts((prevPosts) =>
+        prevPosts.map((p) =>
+          p.id === postId
+            ? {
+                ...p,
+                bookmarked: !p.bookmarked,
+              }
+            : p
+        )
+      )
 
       toast({
-        title: "Removed from reading list",
-        description: "Post has been removed from your reading list",
+        title: post.bookmarked ? "Removed from reading list" : "Added to reading list",
+        description: post.bookmarked
+          ? "Post has been removed from your reading list"
+          : "Post has been added to your reading list",
       })
     } catch (error) {
       toast({
         title: "Error",
         description:
-          error instanceof Error ? error.message : "Failed to remove bookmark",
+          error instanceof Error ? error.message : "Failed to bookmark post",
         variant: "destructive",
       })
     }
@@ -187,10 +212,16 @@ export default function ReadingListPage() {
       <MainNav />
       <main className="flex-1 container py-6">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold mb-8">Reading List</h1>
+          <div className="flex items-center justify-between mb-8">
+            <h1 className="text-3xl font-bold tracking-tight">Latest Posts</h1>
+            <Button asChild>
+              <Link href="/posts/new">Write a Post</Link>
+            </Button>
+          </div>
+
           {posts.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
-              Your reading list is empty. Start bookmarking posts to read later!
+              No posts found
             </div>
           ) : (
             <div className="space-y-6">
@@ -273,19 +304,43 @@ export default function ReadingListPage() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-primary"
-                      onClick={() => handleRemoveBookmark(post.id)}
+                      className={post.bookmarked ? "text-primary" : ""}
+                      onClick={() => handleBookmark(post.id)}
                     >
-                      <Bookmark className="mr-1 h-4 w-4 fill-current" />
-                      Remove
+                      <Bookmark
+                        className={`mr-1 h-4 w-4 ${
+                          post.bookmarked ? "fill-current" : ""
+                        }`}
+                      />
+                      {post.bookmarked ? "Saved" : "Save"}
                     </Button>
                   </div>
                 </article>
               ))}
             </div>
           )}
+
+          {totalPages > 1 && (
+            <div className="flex justify-center space-x-2 mt-8">
+              <Button
+                variant="outline"
+                disabled={page === 0}
+                onClick={() => setPage(page - 1)}
+              >
+                Previous
+              </Button>
+              <Button
+                variant="outline"
+                disabled={page === totalPages - 1}
+                onClick={() => setPage(page + 1)}
+              >
+                Next
+              </Button>
+            </div>
+          )}
         </div>
       </main>
+      <Footer />
     </div>
   )
 } 
