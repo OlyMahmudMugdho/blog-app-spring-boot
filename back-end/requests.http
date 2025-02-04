@@ -9,10 +9,10 @@ POST {{baseUrl}}/auth/register
 Content-Type: application/json
 
 {
-    "username": "johndoe",
+    "username": "mugdho1",
     "name": "John Doe",
-    "email": "john@example.com",
-    "password": "password123"
+    "email": "mugdho1@example.com",
+    "password": "mugdho1"
 }
 
 ### Login
@@ -20,8 +20,8 @@ POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "username": "johndoe",
-    "password": "password123"
+    "username": "mugdho",
+    "password": "mugdho"
 }
 
 ### Request Password Reset

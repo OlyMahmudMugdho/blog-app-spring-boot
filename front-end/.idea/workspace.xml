@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a2b75039-245e-47d1-9cf3-4584d632e3a7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../back-end/requests.http" beforeDir="false" afterPath="$PROJECT_DIR$/../back-end/requests.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog-app-front-end/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog-app-front-end/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog-app-front-end/components.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog-app-front-end/eslint.config.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog-app-front-end/next.config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog-app-front-end/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog-app-front-end/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog-app-front-end/postcss.config.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog-app-front-end/public/file.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog-app-front-end/public/globe.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog-app-front-end/public/next.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog-app-front-end/public/vercel.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog-app-front-end/public/window.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog-app-front-end/src/app/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog-app-front-end/src/app/globals.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog-app-front-end/src/app/layout.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog-app-front-end/src/app/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog-app-front-end/src/lib/utils.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog-app-front-end/tailwind.config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog-app-front-end/tsconfig.json" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "OlyMahmudMugdho"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/OlyMahmudMugdho/blog-app-spring-boot.git",
+    "accountId": "763c778c-0c12-448b-9f9d-13b8ffb5b441"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 2
+}]]></component>
+  <component name="ProjectId" id="2sZpD4LB6aN7MbMY4KGvbPNs2vH" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/mugdho/Downloads/blog-app-spring-boot/front-end",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "/home/mugdho/Downloads/blog-app-spring-boot/front-end/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.117" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.117" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a2b75039-245e-47d1-9cf3-4584d632e3a7" name="Changes" comment="" />
+      <created>1738672827561</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1738672827561</updated>
+      <workItem from="1738672829631" duration="513000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
