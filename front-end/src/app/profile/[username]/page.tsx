@@ -373,7 +373,7 @@ export default function UserProfilePage() {
       <MainNav />
       <main className="flex-1 container py-6">
         <div className="max-w-4xl mx-auto">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0 mb-8">
             <div className="flex items-center space-x-4">
               {user.profilePicture ? (
                 <Image
@@ -403,13 +403,14 @@ export default function UserProfilePage() {
               </div>
             </div>
             {isOwnProfile ? (
-              <Button asChild>
+              <Button asChild className="w-full sm:w-auto">
                 <Link href="/settings">Edit Profile</Link>
               </Button>
             ) : (
               <Button
                 onClick={handleFollow}
                 variant={user.isFollowing ? "destructive" : "default"}
+                className="w-full sm:w-auto"
               >
                 {user.isFollowing ? "Unfollow" : "Follow"}
               </Button>

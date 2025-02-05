@@ -31,7 +31,7 @@ export function Footer() {
         </div>
         <div className="flex items-center space-x-4">
           <Link
-            href="https://github.com/yourusername/blog-app-spring-boot"
+            href="https://github.com/OlyMahmudMugdho/blog-app-spring-boot"
             target="_blank"
             rel="noreferrer"
           >
@@ -39,7 +39,7 @@ export function Footer() {
             <span className="sr-only">GitHub</span>
           </Link>
           <Link
-            href="https://twitter.com/yourusername"
+            href="https://twitter.com/OlyMahmudMugdho"
             target="_blank"
             rel="noreferrer"
           >
