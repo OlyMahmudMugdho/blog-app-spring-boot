@@ -395,7 +395,7 @@ export default function NewPostPage() {
                       label="Add Link"
                     />
                   </div>
-                </div>
+                    </div>
                 <EditorContent editor={editor} />
               </div>
             </div>

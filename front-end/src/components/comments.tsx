@@ -60,13 +60,16 @@ export function Comments({ postId }: CommentsProps) {
 
   async function fetchComments() {
     try {
+      const token = localStorage.getItem("token")
+      const headers: Record<string, string> = {}
+      
+      if (token) {
+        headers.Authorization = `Bearer ${token}`
+      }
+
       const response = await fetch(
         `http://localhost:8080/api/v1/comments/post/${postId}?sort=createdAt,desc`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
+        { headers }
       )
 
       if (!response.ok) {

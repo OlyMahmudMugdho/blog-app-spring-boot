@@ -72,15 +72,9 @@ body {
 }
 
 /* Tiptap Editor Styles */
-.ProseMirror p.is-editor-empty:first-child::before {
-  color: #adb5bd;
-  content: attr(data-placeholder);
-  float: left;
-  height: 0;
-  pointer-events: none;
-}
-
 .ProseMirror {
+  background-color: var(--background);
+  color: var(--foreground);
   > * + * {
     margin-top: 0.75em;
   }
@@ -134,4 +128,9 @@ body {
     border-top: 2px solid rgba(13, 13, 13, 0.1);
     margin: 2rem 0;
   }
+}
+
+.dark .ProseMirror {
+  background-color: #000;
+  color: #FFF;
 }

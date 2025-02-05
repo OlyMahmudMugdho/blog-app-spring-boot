@@ -1,5 +1,7 @@
 package com.mahmud.back_end.security;
 
+import static org.springframework.http.HttpMethod.GET;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -34,6 +36,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/posts/user/{username}").permitAll()
                 .requestMatchers("/api/v1/posts/tag/{tag}").permitAll()
                 .requestMatchers("/api/v1/users/{username}").permitAll()
+                .requestMatchers(GET, "/api/v1/comments/post/*").permitAll()
                 .requestMatchers(
                     "/v2/api-docs",
                     "/v3/api-docs",
