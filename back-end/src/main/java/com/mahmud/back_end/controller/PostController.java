@@ -100,4 +100,11 @@ public class PostController {
     public ResponseEntity<PostDTO> removeBookmark(@PathVariable Long id) {
         return ResponseEntity.ok(postService.removeBookmark(id));
     }
+
+    @GetMapping("/bookmarked")
+    public ResponseEntity<Page<PostDTO>> getBookmarkedPosts(
+            @PageableDefault(size = 10, sort = "createdAt") Pageable pageable
+    ) {
+        return ResponseEntity.ok(postService.getBookmarkedPosts(pageable));
+    }
 } 

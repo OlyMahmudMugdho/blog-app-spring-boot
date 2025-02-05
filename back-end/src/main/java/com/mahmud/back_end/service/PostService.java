@@ -186,6 +186,15 @@ public class PostService {
                 .map(post -> convertToDTO(post, currentUser));
     }
 
+    public Page<PostDTO> getBookmarkedPosts(Pageable pageable) {
+        User currentUser = getAuthenticatedUser();
+        if (currentUser == null) {
+            throw new IllegalStateException("User must be authenticated to view bookmarked posts");
+        }
+        return postRepository.findByBookmarks(currentUser, pageable)
+                .map(post -> convertToDTO(post, currentUser));
+    }
+
     private User getAuthenticatedUser() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication.getName().equals("anonymousUser")) {

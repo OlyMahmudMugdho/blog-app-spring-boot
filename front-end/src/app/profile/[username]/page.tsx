@@ -24,11 +24,15 @@ interface Post {
 }
 
 interface User {
+  id: number
   username: string
   name: string
   bio?: string
   profilePicture?: string
   createdAt: string
+  followersCount: number
+  followingCount: number
+  isFollowing: boolean
 }
 
 export default function UserProfilePage() {
@@ -276,6 +280,68 @@ export default function UserProfilePage() {
     }
   }
 
+  async function handleFollow() {
+    try {
+      const token = localStorage.getItem("token")
+      if (!token) {
+        toast({
+          title: "Error",
+          description: "You must be logged in to follow users",
+          variant: "destructive",
+        })
+        return
+      }
+
+      if (!user) {
+        toast({
+          title: "Error",
+          description: "User not found",
+          variant: "destructive",
+        })
+        return
+      }
+
+      const method = user.isFollowing ? "DELETE" : "POST"
+      const response = await fetch(
+        `http://localhost:8080/api/v1/users/${user.id}/${user.isFollowing ? "unfollow" : "follow"}`,
+        {
+          method,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+
+      if (!response.ok) {
+        throw new Error(`Failed to ${user.isFollowing ? "unfollow" : "follow"} user`)
+      }
+
+      // Update the user state with the new follow status
+      setUser(prevUser => {
+        if (!prevUser) return null
+        return {
+          ...prevUser,
+          isFollowing: !prevUser.isFollowing,
+          followersCount: prevUser.isFollowing 
+            ? prevUser.followersCount - 1 
+            : prevUser.followersCount + 1
+        }
+      })
+
+      toast({
+        title: "Success",
+        description: `Successfully ${user.isFollowing ? "unfollowed" : "followed"} ${user.name}`,
+      })
+    } catch (error) {
+      toast({
+        title: "Error",
+        description:
+          error instanceof Error ? error.message : "Failed to update follow status",
+        variant: "destructive",
+      })
+    }
+  }
+
   if (loading) {
     return (
       <div className="relative flex min-h-screen flex-col">
@@ -327,14 +393,25 @@ export default function UserProfilePage() {
               <div>
                 <h1 className="text-2xl font-bold">{user.name}</h1>
                 <p className="text-muted-foreground">@{user.username}</p>
-                <p className="text-sm text-muted-foreground">
-                  <FormattedDate date={user.createdAt} prefix="Joined" />
-                </p>
+                <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+                  <p>
+                    <FormattedDate date={user.createdAt} prefix="Joined" />
+                  </p>
+                  <p>{user.followersCount} followers</p>
+                  <p>{user.followingCount} following</p>
+                </div>
               </div>
             </div>
-            {isOwnProfile && (
+            {isOwnProfile ? (
               <Button asChild>
                 <Link href="/settings">Edit Profile</Link>
+              </Button>
+            ) : (
+              <Button
+                onClick={handleFollow}
+                variant={user.isFollowing ? "destructive" : "default"}
+              >
+                {user.isFollowing ? "Unfollow" : "Follow"}
               </Button>
             )}
           </div>
