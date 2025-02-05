@@ -31,6 +31,9 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers("/api/v1/posts").permitAll()
                 .requestMatchers("/api/v1/posts/{id}").permitAll()
+                .requestMatchers("/api/v1/posts/user/{username}").permitAll()
+                .requestMatchers("/api/v1/posts/tag/{tag}").permitAll()
+                .requestMatchers("/api/v1/users/{username}").permitAll()
                 .requestMatchers(
                     "/v2/api-docs",
                     "/v3/api-docs",

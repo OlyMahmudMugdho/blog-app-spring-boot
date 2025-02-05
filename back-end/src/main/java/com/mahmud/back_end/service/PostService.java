@@ -187,8 +187,11 @@ public class PostService {
     }
 
     private User getAuthenticatedUser() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByUsername(username)
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication.getName().equals("anonymousUser")) {
+            return null;
+        }
+        return userRepository.findByUsername(authentication.getName())
                 .orElseThrow(() -> new IllegalStateException("Authentication user not found"));
     }
 
@@ -204,8 +207,8 @@ public class PostService {
                 .likesCount(post.getLikes().size())
                 .commentsCount(0) // TODO: Implement comment count
                 .bookmarksCount(post.getBookmarks().size())
-                .isLiked(post.getLikes().contains(currentUser))
-                .isBookmarked(post.getBookmarks().contains(currentUser))
+                .isLiked(currentUser != null && post.getLikes().contains(currentUser))
+                .isBookmarked(currentUser != null && post.getBookmarks().contains(currentUser))
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
                 .build();
