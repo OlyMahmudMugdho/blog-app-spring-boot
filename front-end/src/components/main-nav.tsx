@@ -122,6 +122,12 @@ export function MainNav() {
                   <Button asChild variant="ghost" className="hidden md:inline-flex">
                     <Link href="/posts/new">Write a Post</Link>
                   </Button>
+                  <Button asChild variant="ghost" className="hidden md:inline-flex">
+                    <Link href={`/profile/${user.username}`}>Profile</Link>
+                  </Button>
+                  <Button variant="ghost" className="hidden md:inline-flex" onClick={handleLogout}>
+                    Log out
+                  </Button>
                 </div>
               ) : (
                 <div className="hidden md:flex items-center space-x-2">
