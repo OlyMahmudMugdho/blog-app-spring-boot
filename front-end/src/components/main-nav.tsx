@@ -119,14 +119,8 @@ export function MainNav() {
             <>
               {user ? (
                 <div className="flex items-center space-x-2">
-                  <Button asChild variant="ghost">
+                  <Button asChild variant="ghost" className="hidden md:inline-flex">
                     <Link href="/posts/new">Write a Post</Link>
-                  </Button>
-                  <Button asChild variant="ghost">
-                    <Link href={`/profile/${user.username}`}>Profile</Link>
-                  </Button>
-                  <Button onClick={handleLogout} variant="ghost">
-                    Log out
                   </Button>
                 </div>
               ) : (

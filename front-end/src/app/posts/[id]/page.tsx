@@ -7,12 +7,18 @@ import Link from "next/link"
 import Image from "next/image"
 import dynamic from "next/dynamic"
 import { formatDistanceToNow } from "date-fns"
-import { Heart, Bookmark, Edit, Trash2 } from "lucide-react"
+import { Heart, Bookmark, Edit, Trash2, MoreVertical } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { MainNav } from "@/components/main-nav"
 import { Button } from "@/components/ui/button"
 import { FormattedDate } from "@/components/formatted-date"
 import { Footer } from "@/components/footer"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 const MarkdownPreview = dynamic(
   () => import("@uiw/react-markdown-preview").then((mod) => mod.default),
@@ -374,25 +380,29 @@ export default function PostPage() {
             {isAuthor && (
               <>
                 <div className="flex-1" />
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  asChild
-                >
-                  <Link href={`/posts/${params.id}/edit`}>
-                    <Edit className="mr-1 h-4 w-4" />
-                    Edit Post
-                  </Link>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleDeletePost}
-                  className="text-red-500 hover:text-red-600"
-                >
-                  <Trash2 className="mr-1 h-4 w-4" />
-                  Delete Post
-                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm">
+                      <MoreVertical className="h-4 w-4" />
+                      <span className="sr-only">More options</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem asChild>
+                      <Link href={`/posts/${params.id}/edit`}>
+                        <Edit className="mr-2 h-4 w-4" />
+                        Edit Post
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={handleDeletePost}
+                      className="text-red-500 focus:text-red-500"
+                    >
+                      <Trash2 className="mr-2 h-4 w-4" />
+                      Delete Post
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </>
             )}
           </div>
