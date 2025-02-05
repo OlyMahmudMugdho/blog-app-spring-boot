@@ -1,3 +1,6 @@
+"use client"
+
+import { useState, useEffect } from "react"
 import { MainNav } from "@/components/main-nav"
 import { PostList } from "@/components/post-list"
 import { Button } from "@/components/ui/button"
@@ -5,6 +8,13 @@ import { Footer } from "@/components/footer"
 import Link from "next/link"
 
 export default function Home() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    setIsAuthenticated(!!token)
+  }, [])
+
   return (
     <div className="relative flex min-h-screen flex-col">
       <MainNav />
@@ -22,9 +32,11 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                  <Button asChild size="lg" className="bg-primary text-primary-foreground">
-                    <Link href="/auth/register">Create account</Link>
-                  </Button>
+                  {!isAuthenticated ? (
+                    <Button asChild size="lg" className="bg-primary text-primary-foreground">
+                      <Link href="/auth/register">Create account</Link>
+                    </Button>
+                  ) : null}
                   <Button asChild variant="outline" size="lg">
                     <Link href="/posts/new">Write a Post</Link>
                   </Button>

@@ -8,10 +8,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class LoginRequest {
-    
     @NotBlank(message = "Username is required")
     private String username;
 

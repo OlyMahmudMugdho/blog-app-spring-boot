@@ -1,7 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useState } from "react"
 import Link from "next/link"
 import { MainNav } from "@/components/main-nav"
 import { Button } from "@/components/ui/button"
@@ -10,19 +9,11 @@ import { useToast } from "@/hooks/use-toast"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Footer } from "@/components/footer"
 
-export default function LoginPage() {
-  const router = useRouter()
+export default function ForgotPasswordPage() {
   const { toast } = useToast()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    // Check if user is already logged in
-    const token = localStorage.getItem("token")
-    if (token) {
-      router.push("/")
-    }
-  }, [router])
+  const [emailSent, setEmailSent] = useState(false)
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -30,33 +21,28 @@ export default function LoginPage() {
     setError("")
 
     const formData = new FormData(event.currentTarget)
-    const username = formData.get("username") as string
-    const password = formData.get("password") as string
+    const email = formData.get("email") as string
 
     try {
-      const response = await fetch("http://localhost:8080/api/v1/auth/login", {
+      const response = await fetch("http://localhost:8080/api/v1/auth/forgot-password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ email }),
       })
 
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.message || "Failed to login")
+        throw new Error(data.message || "Failed to send reset email")
       }
 
-      // Store the token
-      localStorage.setItem("token", data.token)
-      
+      setEmailSent(true)
       toast({
         title: "Success",
-        description: "You have successfully logged in",
+        description: "Password reset instructions have been sent to your email",
       })
-
-      router.push("/")
     } catch (error) {
       setError(error instanceof Error ? error.message : "Something went wrong")
     } finally {
@@ -72,10 +58,10 @@ export default function LoginPage() {
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
-                Welcome back
+                Reset your password
               </h1>
               <p className="text-sm text-muted-foreground">
-                Enter your credentials to sign in to your account
+                Enter your email address and we'll send you instructions to reset your password
               </p>
             </div>
 
@@ -85,50 +71,42 @@ export default function LoginPage() {
               </Alert>
             )}
 
-            <form onSubmit={onSubmit}>
-              <div className="grid gap-4">
-                <div className="grid gap-2">
-                  <Input
-                    id="username"
-                    name="username"
-                    placeholder="Username"
-                    type="username"
-                    autoCapitalize="none"
-                    autoComplete="username"
-                    autoCorrect="off"
-                    disabled={loading}
-                    required
-                  />
-                  <div className="grid gap-1">
+            {emailSent ? (
+              <div className="space-y-4">
+                <Alert>
+                  <AlertDescription>
+                    Check your email for password reset instructions. The link will expire in 15 minutes.
+                  </AlertDescription>
+                </Alert>
+                <Button asChild variant="outline" className="w-full">
+                  <Link href="/auth/login">Back to login</Link>
+                </Button>
+              </div>
+            ) : (
+              <form onSubmit={onSubmit}>
+                <div className="grid gap-4">
+                  <div className="grid gap-2">
                     <Input
-                      id="password"
-                      name="password"
-                      placeholder="Password"
-                      type="password"
+                      id="email"
+                      name="email"
+                      placeholder="Email"
+                      type="email"
                       autoCapitalize="none"
-                      autoComplete="current-password"
+                      autoComplete="email"
                       autoCorrect="off"
                       disabled={loading}
                       required
                     />
-                    <div className="text-sm text-right">
-                      <Link
-                        href="/auth/forgot-password"
-                        className="text-muted-foreground hover:text-primary"
-                      >
-                        Forgot password?
-                      </Link>
-                    </div>
                   </div>
+                  <Button disabled={loading} className="w-full">
+                    {loading && (
+                      <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-background border-t-foreground" />
+                    )}
+                    Send Reset Instructions
+                  </Button>
                 </div>
-                <Button disabled={loading} className="w-full">
-                  {loading && (
-                    <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-background border-t-foreground" />
-                  )}
-                  Sign In
-                </Button>
-              </div>
-            </form>
+              </form>
+            )}
 
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
@@ -142,7 +120,7 @@ export default function LoginPage() {
             </div>
 
             <Button variant="outline" asChild className="w-full">
-              <Link href="/auth/register">Create an account</Link>
+              <Link href="/auth/login">Back to login</Link>
             </Button>
           </div>
         </div>

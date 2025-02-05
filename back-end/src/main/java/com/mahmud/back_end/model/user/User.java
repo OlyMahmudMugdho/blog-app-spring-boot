@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,7 +43,7 @@ public class User extends BaseEntity implements UserDetails {
     @Size(max = 100)
     private String password;
 
-    @Size(max = 500)
+    @Column(columnDefinition = "TEXT")
     private String bio;
 
     private String profilePicture;
@@ -63,6 +64,10 @@ public class User extends BaseEntity implements UserDetails {
     private Set<User> following = new HashSet<>();
 
     private boolean enabled = true;
+
+    private String resetToken;
+
+    private Instant resetTokenExpiry;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

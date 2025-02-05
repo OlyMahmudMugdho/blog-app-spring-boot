@@ -122,6 +122,9 @@ export function MainNav() {
                   <Button asChild variant="ghost">
                     <Link href="/posts/new">Write a Post</Link>
                   </Button>
+                  <Button asChild variant="ghost">
+                    <Link href={`/profile/${user.username}`}>Profile</Link>
+                  </Button>
                   <Button onClick={handleLogout} variant="ghost">
                     Log out
                   </Button>
@@ -176,22 +179,52 @@ export function MainNav() {
               >
                 Tags
               </Link>
-              {!loading && !user && (
+              {!loading && (
                 <>
-                  <Link
-                    href="/auth/login"
-                    className="text-foreground/60 hover:text-foreground/80"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Log in
-                  </Link>
-                  <Link
-                    href="/auth/register"
-                    className="text-foreground/60 hover:text-foreground/80"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Create account
-                  </Link>
+                  {user ? (
+                    <>
+                      <Link
+                        href="/posts/new"
+                        className="text-foreground/60 hover:text-foreground/80"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        Write a Post
+                      </Link>
+                      <Link
+                        href={`/profile/${user.username}`}
+                        className="text-foreground/60 hover:text-foreground/80"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        Profile
+                      </Link>
+                      <button
+                        onClick={() => {
+                          handleLogout()
+                          setIsOpen(false)
+                        }}
+                        className="text-left text-foreground/60 hover:text-foreground/80"
+                      >
+                        Log out
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        href="/auth/login"
+                        className="text-foreground/60 hover:text-foreground/80"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        Log in
+                      </Link>
+                      <Link
+                        href="/auth/register"
+                        className="text-foreground/60 hover:text-foreground/80"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        Create account
+                      </Link>
+                    </>
+                  )}
                 </>
               )}
             </nav>

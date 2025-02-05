@@ -1,21 +1,18 @@
 package com.mahmud.back_end.dto.auth;
 
-import com.mahmud.back_end.model.user.Role;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthResponse {
-    private String token;
-    private String username;
+public class ForgotPasswordRequest {
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
     private String email;
-    private String name;
-    private Set<Role> roles;
 } 
