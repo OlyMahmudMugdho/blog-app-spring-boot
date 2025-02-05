@@ -8,6 +8,17 @@ import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/hooks/use-toast"
 import { FormattedDate } from "@/components/formatted-date"
 import { MessageCircle, Edit2, Trash2 } from "lucide-react"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 interface Comment {
   id: number
@@ -33,6 +44,7 @@ export function Comments({ postId }: CommentsProps) {
   const [editingId, setEditingId] = useState<number | null>(null)
   const [editContent, setEditContent] = useState("")
   const [user, setUser] = useState<{ username: string; name: string } | null>(null)
+  const [commentToDelete, setCommentToDelete] = useState<number | null>(null)
 
   useEffect(() => {
     fetchComments()
@@ -181,8 +193,6 @@ export function Comments({ postId }: CommentsProps) {
   }
 
   async function handleDelete(commentId: number) {
-    if (!confirm("Are you sure you want to delete this comment?")) return
-
     try {
       const token = localStorage.getItem("token")
       if (!token) return
@@ -212,6 +222,8 @@ export function Comments({ postId }: CommentsProps) {
         description: "Failed to delete comment",
         variant: "destructive",
       })
+    } finally {
+      setCommentToDelete(null)
     }
   }
 
@@ -308,14 +320,35 @@ export function Comments({ postId }: CommentsProps) {
                       <Edit2 className="h-4 w-4" />
                       <span className="sr-only">Edit comment</span>
                     </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleDelete(comment.id)}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                      <span className="sr-only">Delete comment</span>
-                    </Button>
+                    <AlertDialog open={commentToDelete === comment.id} onOpenChange={(open) => !open && setCommentToDelete(null)}>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setCommentToDelete(comment.id)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                          <span className="sr-only">Delete comment</span>
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This action cannot be undone. This will permanently delete your comment.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => handleDelete(comment.id)}
+                            className="bg-red-500 hover:bg-red-600 focus:ring-red-500"
+                          >
+                            Delete
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </div>
                 )}
               </div>
