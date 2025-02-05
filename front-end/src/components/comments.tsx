@@ -111,7 +111,7 @@ export function Comments({ postId }: CommentsProps) {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ content }),
+          body: JSON.stringify({ content, postId }),
         }
       )
 
