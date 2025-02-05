@@ -373,7 +373,7 @@ export default function PostPage() {
             ))}
           </div>
           <div className="prose dark:prose-invert max-w-none mb-8">
-            <div data-color-mode={theme === "dark" ? "dark" : "light"} className="bg-white dark:bg-black p-4 rounded-lg">
+            <div data-color-mode={theme === "dark" ? "dark" : "light"} className="bg-white dark:bg-[#09090B] p-4 rounded-lg">
               <MarkdownPreview source={post.content} />
             </div>
           </div>

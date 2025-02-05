@@ -132,7 +132,7 @@ body {
 
 /* Dark mode styles for post content */
 .dark .prose {
-  background-color: #000;
+  background-color: #09090B;
   color: #FFF;
   padding: 1rem;
   border-radius: 0.5rem;
@@ -140,22 +140,22 @@ body {
 
 /* Dark mode styles for markdown preview */
 .dark [data-color-mode="dark"] {
-  background-color: #000;
+  background-color: #09090B;
   color: #FFF;
 }
 
 .dark [data-color-mode="dark"] .wmde-markdown {
-  background-color: #000;
+  background-color: #09090B;
   color: #FFF;
 }
 
 .dark [data-color-mode="dark"] .wmde-markdown-var {
-  background-color: #000 !important;
+  background-color: #09090B !important;
   color: #FFF !important;
 }
 
 .dark .ProseMirror {
-  background-color: #000;
+  background-color: #09090B;
   color: #FFF;
 }
 
