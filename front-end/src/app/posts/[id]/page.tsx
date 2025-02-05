@@ -19,6 +19,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import { Comments } from "@/components/comments"
 
 const MarkdownPreview = dynamic(
@@ -52,6 +63,7 @@ export default function PostPage() {
   const [error, setError] = useState("")
   const [theme, setTheme] = useState<"light" | "dark">("light")
   const [isAuthor, setIsAuthor] = useState(false)
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
   useEffect(() => {
     fetchPost()
@@ -247,10 +259,6 @@ export default function PostPage() {
   }
 
   async function handleDeletePost() {
-    if (!confirm("Are you sure you want to delete this post?")) {
-      return
-    }
-
     try {
       const token = localStorage.getItem("token")
       if (!token) {
@@ -420,13 +428,35 @@ export default function PostPage() {
                         Edit Post
                       </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={handleDeletePost}
-                      className="text-red-500 focus:text-red-500"
-                    >
-                      <Trash2 className="mr-2 h-4 w-4" />
-                      Delete Post
-                    </DropdownMenuItem>
+                    <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+                      <AlertDialogTrigger asChild>
+                        <DropdownMenuItem
+                          className="text-red-500 focus:text-red-500"
+                          onSelect={(e) => e.preventDefault()}
+                        >
+                          <Trash2 className="mr-2 h-4 w-4" />
+                          Delete Post
+                        </DropdownMenuItem>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This action cannot be undone. This will permanently delete your post
+                            and all its comments.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={handleDeletePost}
+                            className="bg-red-500 hover:bg-red-600 focus:ring-red-500"
+                          >
+                            Delete
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </>
