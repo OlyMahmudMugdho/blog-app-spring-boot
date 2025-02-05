@@ -50,12 +50,36 @@ export default function PostPage() {
   const [post, setPost] = useState<Post | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
-  const [theme, setTheme] = useState("light")
+  const [theme, setTheme] = useState<"light" | "dark">("light")
   const [isAuthor, setIsAuthor] = useState(false)
 
   useEffect(() => {
     fetchPost()
     checkIfAuthor()
+    
+    // Check initial theme
+    if (typeof window !== "undefined") {
+      const isDark = document.documentElement.classList.contains("dark")
+      setTheme(isDark ? "dark" : "light")
+      
+      // Create observer for theme changes
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.attributeName === "class") {
+            const isDark = document.documentElement.classList.contains("dark")
+            setTheme(isDark ? "dark" : "light")
+          }
+        })
+      })
+      
+      // Start observing theme changes
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["class"],
+      })
+      
+      return () => observer.disconnect()
+    }
   }, [params.id])
 
   async function checkIfAuthor() {
