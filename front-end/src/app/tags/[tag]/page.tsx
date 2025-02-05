@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useParams } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import { MainNav } from "@/components/main-nav"
@@ -28,37 +28,33 @@ interface Post {
   bookmarked: boolean
 }
 
-export default function ReadingListPage() {
-  const router = useRouter()
+export default function TagPage() {
+  const params = useParams()
   const { toast } = useToast()
   const [posts, setPosts] = useState<Post[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
 
   useEffect(() => {
-    const token = localStorage.getItem("token")
-    if (!token) {
-      router.push("/auth/login")
-      return
-    }
+    fetchPosts()
+  }, [params.tag])
 
-    fetchBookmarkedPosts()
-  }, [router])
-
-  async function fetchBookmarkedPosts() {
+  async function fetchPosts() {
     try {
       const token = localStorage.getItem("token")
       const response = await fetch(
-        "http://localhost:8080/api/v1/posts/bookmarked",
+        `http://localhost:8080/api/v1/posts/tag/${params.tag}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: token
+            ? {
+                Authorization: `Bearer ${token}`,
+              }
+            : {},
         }
       )
 
       if (!response.ok) {
-        throw new Error("Failed to fetch bookmarked posts")
+        throw new Error("Failed to fetch posts")
       }
 
       const data = await response.json()
@@ -151,11 +147,22 @@ export default function ReadingListPage() {
         throw new Error("Failed to bookmark post")
       }
 
-      setPosts((prevPosts) => prevPosts.filter((p) => p.id !== postId))
+      setPosts((prevPosts) =>
+        prevPosts.map((p) =>
+          p.id === postId
+            ? {
+                ...p,
+                bookmarked: !p.bookmarked,
+              }
+            : p
+        )
+      )
 
       toast({
-        title: "Success",
-        description: "Post removed from reading list",
+        title: post.bookmarked ? "Removed from reading list" : "Added to reading list",
+        description: post.bookmarked
+          ? "Post has been removed from your reading list"
+          : "Post has been added to your reading list",
       })
     } catch (error) {
       toast({
@@ -186,16 +193,21 @@ export default function ReadingListPage() {
       <main className="flex-1 container py-6">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center justify-between mb-8">
-            <h1 className="text-3xl font-bold tracking-tight">Reading List</h1>
+            <div>
+              <h1 className="text-3xl font-bold tracking-tight">#{params.tag}</h1>
+              <p className="text-muted-foreground mt-1">
+                {posts.length} {posts.length === 1 ? "post" : "posts"}
+              </p>
+            </div>
           </div>
 
           {error ? (
             <div className="text-center py-8 text-muted-foreground">{error}</div>
           ) : posts.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
-              No saved posts yet.{" "}
+              No posts found with this tag.{" "}
               <Link href="/" className="text-primary hover:underline">
-                Browse posts
+                Browse all posts
               </Link>
             </div>
           ) : (
@@ -252,7 +264,11 @@ export default function ReadingListPage() {
                           <Link
                             key={tag}
                             href={`/tags/${tag}`}
-                            className="text-sm text-muted-foreground hover:text-primary"
+                            className={`text-sm ${
+                              tag === params.tag
+                                ? "text-primary font-medium"
+                                : "text-muted-foreground hover:text-primary"
+                            }`}
                           >
                             #{tag}
                           </Link>
@@ -277,11 +293,15 @@ export default function ReadingListPage() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-primary"
+                      className={post.bookmarked ? "text-primary" : ""}
                       onClick={() => handleBookmark(post.id)}
                     >
-                      <Bookmark className="mr-1 h-4 w-4 fill-current" />
-                      Remove
+                      <Bookmark
+                        className={`mr-1 h-4 w-4 ${
+                          post.bookmarked ? "fill-current" : ""
+                        }`}
+                      />
+                      {post.bookmarked ? "Saved" : "Save"}
                     </Button>
                     <Button
                       variant="ghost"

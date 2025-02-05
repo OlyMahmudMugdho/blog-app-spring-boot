@@ -18,7 +18,7 @@ export default function Home() {
                     Welcome to DEV Community
                   </h1>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                    A constructive and inclusive social network for software developers. With you every step of your journey.
+                    A social network for software developers. With you every step of your journey.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">

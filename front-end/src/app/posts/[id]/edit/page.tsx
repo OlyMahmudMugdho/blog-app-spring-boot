@@ -147,6 +147,47 @@ export default function EditPostPage() {
     }
   }
 
+  async function handleDelete() {
+    if (!confirm("Are you sure you want to delete this post?")) {
+      return
+    }
+
+    try {
+      const token = localStorage.getItem("token")
+      if (!token) {
+        throw new Error("You must be logged in to delete a post")
+      }
+
+      const response = await fetch(
+        `http://localhost:8080/api/v1/posts/${params.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+
+      if (!response.ok) {
+        throw new Error("Failed to delete post")
+      }
+
+      toast({
+        title: "Success",
+        description: "Your post has been deleted",
+      })
+
+      router.push("/profile")
+    } catch (error) {
+      toast({
+        title: "Error",
+        description:
+          error instanceof Error ? error.message : "Failed to delete post",
+        variant: "destructive",
+      })
+    }
+  }
+
   if (loading) {
     return (
       <div className="relative flex min-h-screen flex-col">
@@ -274,6 +315,14 @@ export default function EditPostPage() {
               </div>
             </div>
             <div className="flex justify-end space-x-4">
+              <Button
+                type="button"
+                variant="destructive"
+                disabled={saving}
+                onClick={handleDelete}
+              >
+                Delete Post
+              </Button>
               <Button
                 type="button"
                 variant="outline"
