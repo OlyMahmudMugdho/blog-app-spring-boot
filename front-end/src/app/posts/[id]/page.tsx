@@ -367,6 +367,53 @@ export default function PostPage() {
                 </p>
               </div>
             </Link>
+            {isAuthor && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm">
+                    <MoreVertical className="h-4 w-4" />
+                    <span className="sr-only">More options</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem asChild>
+                    <Link href={`/posts/${params.id}/edit`}>
+                      <Edit className="mr-2 h-4 w-4" />
+                      Edit Post
+                    </Link>
+                  </DropdownMenuItem>
+                  <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+                    <AlertDialogTrigger asChild>
+                      <DropdownMenuItem
+                        className="text-red-500 focus:text-red-500"
+                        onSelect={(e) => e.preventDefault()}
+                      >
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        Delete Post
+                      </DropdownMenuItem>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. This will permanently delete your post
+                          and all its comments.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={handleDeletePost}
+                          className="bg-red-500 hover:bg-red-600 focus:ring-red-500"
+                        >
+                          Delete
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
           </div>
           <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
           <div className="flex flex-wrap gap-2 mb-8">
@@ -385,7 +432,6 @@ export default function PostPage() {
               <MarkdownPreview source={post.content} />
             </div>
           </div>
-
           <div className="flex items-center space-x-4">
             <Button
               variant="ghost"
@@ -411,56 +457,6 @@ export default function PostPage() {
               />
               {post.bookmarked ? "Saved" : "Save"}
             </Button>
-            {isAuthor && (
-              <>
-                <div className="flex-1" />
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="sm">
-                      <MoreVertical className="h-4 w-4" />
-                      <span className="sr-only">More options</span>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem asChild>
-                      <Link href={`/posts/${params.id}/edit`}>
-                        <Edit className="mr-2 h-4 w-4" />
-                        Edit Post
-                      </Link>
-                    </DropdownMenuItem>
-                    <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-                      <AlertDialogTrigger asChild>
-                        <DropdownMenuItem
-                          className="text-red-500 focus:text-red-500"
-                          onSelect={(e) => e.preventDefault()}
-                        >
-                          <Trash2 className="mr-2 h-4 w-4" />
-                          Delete Post
-                        </DropdownMenuItem>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent>
-                        <AlertDialogHeader>
-                          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                          <AlertDialogDescription>
-                            This action cannot be undone. This will permanently delete your post
-                            and all its comments.
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel>Cancel</AlertDialogCancel>
-                          <AlertDialogAction
-                            onClick={handleDeletePost}
-                            className="bg-red-500 hover:bg-red-600 focus:ring-red-500"
-                          >
-                            Delete
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </>
-            )}
           </div>
           <div className="border-t pt-6">
             <Comments postId={post.id} />
