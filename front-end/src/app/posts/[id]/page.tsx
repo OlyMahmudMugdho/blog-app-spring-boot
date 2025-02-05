@@ -7,7 +7,7 @@ import Link from "next/link"
 import Image from "next/image"
 import dynamic from "next/dynamic"
 import { formatDistanceToNow } from "date-fns"
-import { Heart, Bookmark, Edit, Trash2, MoreVertical } from "lucide-react"
+import { Heart, Bookmark, Edit, Trash2, MoreVertical, Edit2 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { MainNav } from "@/components/main-nav"
 import { Button } from "@/components/ui/button"
@@ -19,6 +19,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Comments } from "@/components/comments"
 
 const MarkdownPreview = dynamic(
   () => import("@uiw/react-markdown-preview").then((mod) => mod.default),
@@ -405,6 +406,9 @@ export default function PostPage() {
                 </DropdownMenu>
               </>
             )}
+          </div>
+          <div className="border-t pt-6">
+            <Comments postId={post.id} />
           </div>
         </article>
       </main>
