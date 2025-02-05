@@ -74,29 +74,30 @@ export default function NewPostPage() {
   const [editorContent, setEditorContent] = useState("")
 
   const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Image,
-      Link.configure({
-        openOnClick: false,
-      }),
-      CodeBlock,
-      Placeholder.configure({
-        placeholder: 'Write your post content here...',
-      }),
-      TextAlign.configure({
-        types: ['heading', 'paragraph'],
-      }),
-    ],
-    editorProps: {
-      attributes: {
-        class: 'prose dark:prose-invert max-w-none focus:outline-none min-h-[500px] px-4 py-2',
-      },
+  extensions: [
+    StarterKit,
+    Image,
+    Link.configure({
+      openOnClick: false,
+    }),
+    CodeBlock,
+    Placeholder.configure({
+      placeholder: 'Write your post content here...',
+    }),
+    TextAlign.configure({
+      types: ['heading', 'paragraph'],
+    }),
+  ],
+  editorProps: {
+    attributes: {
+      class: 'prose dark:prose-invert max-w-none focus:outline-none min-h-[500px] px-4 py-2 bg-white dark:bg-black text-black dark:text-white',
     },
-    onUpdate: ({ editor }) => {
-      setEditorContent(editor.getText());
-    },
-  });
+  },
+  onUpdate: ({ editor }) => {
+    setEditorContent(editor.getText());
+  },
+});
+
   
 
   React.useEffect(() => {

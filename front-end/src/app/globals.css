@@ -130,7 +130,48 @@ body {
   }
 }
 
+/* Dark mode styles for post content */
+.dark .prose {
+  background-color: #000;
+  color: #FFF;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+/* Dark mode styles for markdown preview */
+.dark [data-color-mode="dark"] {
+  background-color: #000;
+  color: #FFF;
+}
+
+.dark [data-color-mode="dark"] .wmde-markdown {
+  background-color: #000;
+  color: #FFF;
+}
+
+.dark [data-color-mode="dark"] .wmde-markdown-var {
+  background-color: #000 !important;
+  color: #FFF !important;
+}
+
 .dark .ProseMirror {
   background-color: #000;
   color: #FFF;
+}
+
+.dark .prose pre {
+  background-color: #1a1a1a;
+}
+
+.dark .prose code {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #e0e0e0;
+}
+
+.dark .prose blockquote {
+  border-left-color: rgba(255, 255, 255, 0.2);
+}
+
+.dark .prose hr {
+  border-color: rgba(255, 255, 255, 0.2);
 }
