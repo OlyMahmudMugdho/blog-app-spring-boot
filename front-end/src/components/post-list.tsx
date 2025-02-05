@@ -4,9 +4,10 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { formatDistanceToNow } from "date-fns"
-import { Heart, Bookmark } from "lucide-react"
+import { Heart, Bookmark, Edit, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/hooks/use-toast"
+import { FormattedDate } from "@/components/formatted-date"
 
 interface Post {
   id: number
@@ -30,10 +31,32 @@ export function PostList() {
   const [posts, setPosts] = useState<Post[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
+  const [currentUsername, setCurrentUsername] = useState<string | null>(null)
 
   useEffect(() => {
     fetchPosts()
+    fetchCurrentUser()
   }, [])
+
+  async function fetchCurrentUser() {
+    try {
+      const token = localStorage.getItem("token")
+      if (!token) return
+
+      const response = await fetch("http://localhost:8080/api/v1/users/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+
+      if (response.ok) {
+        const user = await response.json()
+        setCurrentUsername(user.username)
+      }
+    } catch (error) {
+      console.error("Failed to fetch current user:", error)
+    }
+  }
 
   async function fetchPosts() {
     try {
@@ -170,6 +193,52 @@ export function PostList() {
     }
   }
 
+  async function handleDeletePost(postId: number) {
+    if (!confirm("Are you sure you want to delete this post?")) {
+      return
+    }
+
+    try {
+      const token = localStorage.getItem("token")
+      if (!token) {
+        toast({
+          title: "Error",
+          description: "You must be logged in to delete posts",
+          variant: "destructive",
+        })
+        return
+      }
+
+      const response = await fetch(
+        `http://localhost:8080/api/v1/posts/${postId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+
+      if (!response.ok) {
+        throw new Error("Failed to delete post")
+      }
+
+      setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId))
+      
+      toast({
+        title: "Success",
+        description: "Post deleted successfully",
+      })
+    } catch (error) {
+      toast({
+        title: "Error",
+        description:
+          error instanceof Error ? error.message : "Failed to delete post",
+        variant: "destructive",
+      })
+    }
+  }
+
   if (loading) {
     return (
       <div className="flex justify-center items-center py-8">
@@ -192,13 +261,14 @@ export function PostList() {
           className="flex flex-col space-y-4 bg-card p-6 rounded-lg shadow-sm"
         >
           {post.coverImage && (
-            <Image
-              src={post.coverImage}
-              alt={post.title}
-              width={800}
-              height={400}
-              className="rounded-lg object-cover w-full aspect-video"
-            />
+            <div className="relative w-full aspect-[16/9] max-h-[300px] overflow-hidden rounded-lg">
+              <Image
+                src={post.coverImage}
+                alt={post.title}
+                fill
+                className="object-cover"
+              />
+            </div>
           )}
           <div className="flex items-center space-x-4">
             <Link
@@ -223,9 +293,7 @@ export function PostList() {
               <div>
                 <p className="font-medium">{post.author.name}</p>
                 <p className="text-sm text-muted-foreground">
-                  {formatDistanceToNow(new Date(post.createdAt), {
-                    addSuffix: true,
-                  })}
+                  <FormattedDate date={post.createdAt} />
                 </p>
               </div>
             </Link>
@@ -274,6 +342,15 @@ export function PostList() {
                 }`}
               />
               {post.bookmarked ? "Saved" : "Save"}
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              asChild
+            >
+              <Link href={`/posts/${post.id}`}>
+                View Post
+              </Link>
             </Button>
           </div>
         </article>

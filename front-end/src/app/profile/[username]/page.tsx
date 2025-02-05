@@ -359,13 +359,14 @@ export default function UserProfilePage() {
                     className="flex flex-col space-y-4 bg-card p-6 rounded-lg shadow-sm"
                   >
                     {post.coverImage && (
-                      <Image
-                        src={post.coverImage}
-                        alt={post.title}
-                        width={800}
-                        height={400}
-                        className="rounded-lg object-cover w-full aspect-video"
-                      />
+                      <div className="relative w-full aspect-[16/9] max-h-[300px] overflow-hidden rounded-lg">
+                        <Image
+                          src={post.coverImage}
+                          alt={post.title}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
                     )}
                     <div>
                       <Link href={`/posts/${post.id}`} className="space-y-2">
@@ -421,29 +422,6 @@ export default function UserProfilePage() {
                           View Post
                         </Link>
                       </Button>
-                      {isOwnProfile && (
-                        <>
-                          <div className="flex-1" />
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            asChild
-                          >
-                            <Link href={`/posts/${post.id}/edit`}>
-                              <Edit className="h-4 w-4" />
-                              <span className="sr-only">Edit post</span>
-                            </Link>
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleDeletePost(post.id)}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                            <span className="sr-only">Delete post</span>
-                          </Button>
-                        </>
-                      )}
                     </div>
                   </article>
                 ))}
@@ -452,7 +430,6 @@ export default function UserProfilePage() {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   )
-} 
+}

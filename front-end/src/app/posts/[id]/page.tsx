@@ -2,15 +2,17 @@
 
 import * as React from "react"
 import { useState, useEffect } from "react"
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
 import dynamic from "next/dynamic"
 import { formatDistanceToNow } from "date-fns"
-import { Heart, Bookmark } from "lucide-react"
+import { Heart, Bookmark, Edit, Trash2 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { MainNav } from "@/components/main-nav"
 import { Button } from "@/components/ui/button"
+import { FormattedDate } from "@/components/formatted-date"
+import { Footer } from "@/components/footer"
 
 const MarkdownPreview = dynamic(
   () => import("@uiw/react-markdown-preview").then((mod) => mod.default),
@@ -36,15 +38,53 @@ interface Post {
 
 export default function PostPage() {
   const params = useParams()
+  const router = useRouter()
   const { toast } = useToast()
   const [post, setPost] = useState<Post | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
   const [theme, setTheme] = useState("light")
+  const [isAuthor, setIsAuthor] = useState(false)
 
   useEffect(() => {
     fetchPost()
+    checkIfAuthor()
   }, [params.id])
+
+  async function checkIfAuthor() {
+    try {
+      const token = localStorage.getItem("token")
+      if (!token) {
+        setIsAuthor(false)
+        return
+      }
+
+      const response = await fetch("http://localhost:8080/api/v1/users/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+
+      if (response.ok) {
+        const currentUser = await response.json()
+        const postResponse = await fetch(
+          `http://localhost:8080/api/v1/posts/${params.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        
+        if (postResponse.ok) {
+          const postData = await postResponse.json()
+          setIsAuthor(currentUser.username === postData.author.username)
+        }
+      }
+    } catch (error) {
+      console.error("Failed to check post ownership:", error)
+    }
+  }
 
   async function fetchPost() {
     try {
@@ -175,6 +215,52 @@ export default function PostPage() {
     }
   }
 
+  async function handleDeletePost() {
+    if (!confirm("Are you sure you want to delete this post?")) {
+      return
+    }
+
+    try {
+      const token = localStorage.getItem("token")
+      if (!token) {
+        toast({
+          title: "Error",
+          description: "You must be logged in to delete posts",
+          variant: "destructive",
+        })
+        return
+      }
+
+      const response = await fetch(
+        `http://localhost:8080/api/v1/posts/${params.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+
+      if (!response.ok) {
+        throw new Error("Failed to delete post")
+      }
+
+      toast({
+        title: "Success",
+        description: "Post deleted successfully",
+      })
+
+      router.push("/")
+    } catch (error) {
+      toast({
+        title: "Error",
+        description:
+          error instanceof Error ? error.message : "Failed to delete post",
+        variant: "destructive",
+      })
+    }
+  }
+
   if (loading) {
     return (
       <div className="relative flex min-h-screen flex-col">
@@ -215,7 +301,7 @@ export default function PostPage() {
               className="rounded-lg object-cover w-full aspect-video mb-8"
             />
           )}
-          <div className="flex items-center space-x-4 mb-8">
+          <div className="flex items-center justify-between mb-8">
             <Link
               href={`/profile/${post.author.username}`}
               className="flex items-center space-x-2"
@@ -238,9 +324,7 @@ export default function PostPage() {
               <div>
                 <p className="font-medium">{post.author.name}</p>
                 <p className="text-sm text-muted-foreground">
-                  {formatDistanceToNow(new Date(post.createdAt), {
-                    addSuffix: true,
-                  })}
+                  <FormattedDate date={post.createdAt} />
                 </p>
               </div>
             </Link>
@@ -287,9 +371,34 @@ export default function PostPage() {
               />
               {post.bookmarked ? "Saved" : "Save"}
             </Button>
+            {isAuthor && (
+              <>
+                <div className="flex-1" />
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  asChild
+                >
+                  <Link href={`/posts/${params.id}/edit`}>
+                    <Edit className="mr-1 h-4 w-4" />
+                    Edit Post
+                  </Link>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleDeletePost}
+                  className="text-red-500 hover:text-red-600"
+                >
+                  <Trash2 className="mr-1 h-4 w-4" />
+                  Delete Post
+                </Button>
+              </>
+            )}
           </div>
         </article>
       </main>
+      <Footer />
     </div>
   )
 } 
