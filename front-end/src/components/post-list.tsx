@@ -3,8 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { formatDistanceToNow } from "date-fns"
-import { Heart, Bookmark, Edit, Trash2 } from "lucide-react"
+import { Heart, Bookmark} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/hooks/use-toast"
 import { FormattedDate } from "@/components/formatted-date"
@@ -31,6 +30,7 @@ export function PostList() {
   const [posts, setPosts] = useState<Post[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentUsername, setCurrentUsername] = useState<string | null>(null)
 
   useEffect(() => {
@@ -193,6 +193,7 @@ export function PostList() {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async function handleDeletePost(postId: number) {
     if (!confirm("Are you sure you want to delete this post?")) {
       return

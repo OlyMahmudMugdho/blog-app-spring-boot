@@ -141,6 +141,7 @@ export function Comments({ postId }: CommentsProps) {
         title: "Success",
         description: "Comment added successfully",
       })
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast({
         title: "Error",
@@ -183,6 +184,7 @@ export function Comments({ postId }: CommentsProps) {
         title: "Success",
         description: "Comment updated successfully",
       })
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast({
         title: "Error",
@@ -216,6 +218,7 @@ export function Comments({ postId }: CommentsProps) {
         title: "Success",
         description: "Comment deleted successfully",
       })
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast({
         title: "Error",

@@ -210,7 +210,7 @@ export default function ProfilePage() {
             <TabsContent value="posts" className="mt-6">
               {posts.length === 0 ? (
                 <div className="text-center py-8 text-muted-foreground">
-                  You haven't published any posts yet.{" "}
+                  You haven&apos;t published any posts yet.{" "}
                   <Link href="/posts/new" className="text-primary hover:underline">
                     Write your first post
                   </Link>

@@ -68,6 +68,7 @@ export default function EditPostPage() {
   const params = useParams()
   const router = useRouter()
   const { toast } = useToast()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { theme } = useTheme()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
@@ -75,9 +76,11 @@ export default function EditPostPage() {
   const [tags, setTags] = useState<string[]>([])
   const [tagInput, setTagInput] = useState("")
   const [coverImage, setCoverImage] = useState("")
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [uploading, setUploading] = useState(false)
   const fileInputRef = React.useRef<HTMLInputElement>(null)
   const [editorContent, setEditorContent] = useState("")
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isMarkdownMode, setIsMarkdownMode] = useState(false)
   const [markdownContent, setMarkdownContent] = useState("")
   const [initialContent, setInitialContent] = useState("")

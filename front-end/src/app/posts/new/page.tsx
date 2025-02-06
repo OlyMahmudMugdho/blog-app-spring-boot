@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useState, useCallback } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { MainNav } from "@/components/main-nav"
 import { Button } from "@/components/ui/button"
@@ -63,12 +63,14 @@ function EditorButton({ icon, onClick, label, isActive, disabled }: EditorButton
 export default function NewPostPage() {
   const router = useRouter()
   const { toast } = useToast()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { theme } = useTheme()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const [title, setTitle] = useState("")
   const [tags, setTags] = useState<string[]>([])
   const [tagInput, setTagInput] = useState("")
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [uploading, setUploading] = useState(false)
   const fileInputRef = React.useRef<HTMLInputElement>(null)
   const [editorContent, setEditorContent] = useState("")

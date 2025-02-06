@@ -135,13 +135,13 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-medium">How do I create an account?</h3>
                     <p className="text-sm text-muted-foreground mt-1">
-                      Click the "Create account" button in the top right corner and follow the instructions.
+                      Click the &quot;Create account&quot; button in the top right corner and follow the instructions.
                     </p>
                   </div>
                   <div>
                     <h3 className="font-medium">How do I write a post?</h3>
                     <p className="text-sm text-muted-foreground mt-1">
-                      After logging in, click the "Write a Post" button in the navigation bar.
+                      After logging in, click the &quot;Write a Post&quot; button in the navigation bar.
                     </p>
                   </div>
                   <div>

@@ -6,9 +6,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { 
   PenLine, 
-  Heart, 
-  Bookmark, 
-  MessageCircle, 
+  Heart,
   Hash, 
   Users, 
   Search,
@@ -67,7 +65,7 @@ export default function GuidesPage() {
                 </div>
                 <p>
                   Tags help categorize content and make it discoverable. Add relevant tags to your posts
-                  and follow tags you're interested in.
+                  and follow tags you&apos;re interested in.
                 </p>
                 <Button asChild variant="outline">
                   <Link href="/tags">Browse Tags</Link>
@@ -102,7 +100,7 @@ export default function GuidesPage() {
                   <h2 className="text-xl font-semibold m-0">Reading List</h2>
                 </div>
                 <p>
-                  Save posts to your reading list to access them later. It's a great way
+                  Save posts to your reading list to access them later. It&apos;s a great way
                   to keep track of articles you want to read or reference.
                 </p>
                 <Button asChild variant="outline">
@@ -114,8 +112,8 @@ export default function GuidesPage() {
             <div className="mt-8 p-6 bg-muted rounded-lg">
               <h2 className="text-xl font-semibold mt-0">Need More Help?</h2>
               <p className="mb-4">
-                If you have any questions or need assistance, don't hesitate to reach out.
-                We're here to help!
+                If you have any questions or need assistance, don&apos;t hesitate to reach out.
+                We&apos;re here to help!
               </p>
               <Button asChild>
                 <Link href="/contact">Contact Support</Link>

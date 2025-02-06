@@ -7,9 +7,7 @@ import Link from "next/link"
 import { MainNav } from "@/components/main-nav"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/hooks/use-toast"
-import { Footer } from "@/components/footer"
-import { Heart, Bookmark, Edit, Trash2 } from "lucide-react"
-import { FormattedDate } from "@/components/formatted-date"
+import { Heart, Bookmark } from "lucide-react"
 
 interface Post {
   id: number
@@ -37,6 +35,7 @@ interface User {
 
 export default function UserProfilePage() {
   const params = useParams()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter()
   const { toast } = useToast()
   const [user, setUser] = useState<User | null>(null)
@@ -234,6 +233,7 @@ export default function UserProfilePage() {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async function handleDeletePost(postId: number) {
     if (!confirm("Are you sure you want to delete this post?")) {
       return

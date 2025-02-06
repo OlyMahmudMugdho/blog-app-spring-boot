@@ -60,7 +60,7 @@ export default function AboutPage() {
             <h2>Get Started</h2>
             <p>
               Join our community today to start sharing your knowledge and connecting with other developers.
-              Whether you're a beginner or an experienced developer, there's a place for you here.
+              Whether you&apos;re a beginner or an experienced developer, there&apos;s a place for you here.
             </p>
           </div>
         </div>
