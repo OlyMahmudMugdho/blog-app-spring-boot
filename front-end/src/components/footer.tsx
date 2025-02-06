@@ -10,7 +10,7 @@ export function Footer() {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">DEV Community</h3>
             <p className="text-sm text-muted-foreground">
-              A constructive and inclusive social network for software developers. With you every step of your journey.
+              A social network for software developers. With you every step of your journey.
             </p>
           </div>
           
