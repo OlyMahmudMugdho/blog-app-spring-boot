@@ -375,15 +375,16 @@ export default function UserProfilePage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0 mb-8">
             <div className="flex items-center space-x-4">
-              {user.profilePicture ? (
-                <Image
-                  src={user.profilePicture}
-                  alt={user.name}
-                  width={80}
-                  height={80}
-                  className="rounded-full"
-                />
-              ) : (
+            {user.profilePicture ? (
+  <div className="relative w-20 h-20">
+    <Image
+      src={user.profilePicture}
+      alt={user.name}
+      fill
+      className="rounded-full object-cover"
+    />
+  </div>
+) : (
                 <div className="w-20 h-20 rounded-full bg-secondary flex items-center justify-center">
                   <span className="text-3xl font-semibold">
                     {user.name[0]}
@@ -394,9 +395,7 @@ export default function UserProfilePage() {
                 <h1 className="text-2xl font-bold">{user.name}</h1>
                 <p className="text-muted-foreground">@{user.username}</p>
                 <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                  <p>
-                    <FormattedDate date={user.createdAt} prefix="Joined" />
-                  </p>
+                  
                   <p>{user.followersCount} followers</p>
                   <p>{user.followingCount} following</p>
                 </div>

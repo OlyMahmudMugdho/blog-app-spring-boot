@@ -88,7 +88,7 @@ export function Footer() {
                 <span className="sr-only">Twitter</span>
               </Link>
               <Link
-                href="https://linkedin.com"
+                href="https://linkedin.com/in/olymahmud"
                 target="_blank"
                 rel="noreferrer"
                 className="text-muted-foreground hover:text-foreground"
@@ -97,7 +97,7 @@ export function Footer() {
                 <span className="sr-only">LinkedIn</span>
               </Link>
               <Link
-                href="mailto:contact@dev.to"
+                href="mailto:oly.ice.pust@gmail.com"
                 className="text-muted-foreground hover:text-foreground"
               >
                 <Mail className="h-5 w-5" />
@@ -117,7 +117,7 @@ export function Footer() {
               rel="noreferrer"
               className="font-medium underline underline-offset-4"
             >
-              Next.js
+              Spring Boot
             </a>{" "}
             and{" "}
             <a
@@ -126,7 +126,7 @@ export function Footer() {
               rel="noreferrer"
               className="font-medium underline underline-offset-4"
             >
-              Spring Boot
+              Next.js
             </a>
           </p>
         </div>

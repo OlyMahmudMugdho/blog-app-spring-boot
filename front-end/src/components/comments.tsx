@@ -254,7 +254,7 @@ export function Comments({ postId }: CommentsProps) {
           />
           <Button disabled={submitting || !content.trim()}>
             {submitting && (
-              <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-background border-t-foreground" />
+              <div className="mr-2 h-4 w-4 animate-spin rounded-full object-cover border-2 border-background border-t-foreground" />
             )}
             Post Comment
           </Button>
@@ -284,7 +284,7 @@ export function Comments({ postId }: CommentsProps) {
                   alt={comment.user.name}
                   width={40}
                   height={40}
-                  className="rounded-full"
+                  className="rounded-full object-cover w-10 h-10"
                 />
               ) : (
                 <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">

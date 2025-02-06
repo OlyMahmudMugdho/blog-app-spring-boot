@@ -281,7 +281,7 @@ export function PostList() {
                   alt={post.author.name}
                   width={40}
                   height={40}
-                  className="rounded-full"
+                  className="rounded-full object-cover w-10 h-10"
                 />
               ) : (
                 <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">

@@ -82,15 +82,6 @@ export function MainNav() {
             >
               Reading List
             </Link>
-            <Link
-              href="/tags"
-              className={cn(
-                "transition-colors hover:text-foreground/80",
-                pathname === "/tags" ? "text-foreground" : "text-foreground/60"
-              )}
-            >
-              Tags
-            </Link>
           </nav>
         </div>
 
@@ -169,16 +160,7 @@ export function MainNav() {
               >
                 Reading List
               </Link>
-              <Link
-                href="/tags"
-                className={cn(
-                  "transition-colors hover:text-foreground/80",
-                  pathname === "/tags" ? "text-foreground" : "text-foreground/60"
-                )}
-                onClick={() => setIsOpen(false)}
-              >
-                Tags
-              </Link>
+              
               {!loading && (
                 <>
                   {user ? (
