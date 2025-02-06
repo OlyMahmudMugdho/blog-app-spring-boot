@@ -404,7 +404,7 @@ export default function UserProfilePage() {
             </div>
             {isOwnProfile ? (
               <Button asChild className="w-full sm:w-auto">
-                <Link href="/settings">Edit Profile</Link>
+                <Link href="/profile/edit">Edit Profile</Link>
               </Button>
             ) : (
               <Button

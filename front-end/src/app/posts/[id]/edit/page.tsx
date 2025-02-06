@@ -221,18 +221,18 @@ export default function EditPostPage() {
       const content = isMarkdownMode ? md.render(markdownContent) : editor?.getHTML()
 
       const response = await fetch(`http://localhost:8080/api/v1/posts/${params.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          title,
-          content,
-          tags,
-          coverImage,
-          published: true,
-        }),
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            title,
+            content,
+            tags,
+            coverImage,
+            published: true,
+          }),
       })
 
       const data = await response.json()

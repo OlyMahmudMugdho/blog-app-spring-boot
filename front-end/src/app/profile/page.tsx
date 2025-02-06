@@ -188,8 +188,11 @@ export default function ProfilePage() {
                 </p>
               </div>
             </div>
-            <Button asChild>
-              <Link href="/profile/edit">Edit Profile</Link>
+            <Button asChild variant="outline" size="lg" className="gap-2">
+              <Link href="/profile/edit">
+                <Edit className="h-4 w-4" />
+                Edit Profile
+              </Link>
             </Button>
           </div>
 

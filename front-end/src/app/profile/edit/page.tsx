@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import Image from "next/image"
 import { MainNav } from "@/components/main-nav"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -10,8 +9,10 @@ import { useToast } from "@/hooks/use-toast"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Footer } from "@/components/footer"
 import { Textarea } from "@/components/ui/textarea"
+import ImageUpload from "@/components/image-upload"
 
 interface User {
+  id: number        // Add this
   username: string
   name: string
   email: string
@@ -26,6 +27,7 @@ export default function EditProfilePage() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState("")
+  const [profilePicture, setProfilePicture] = useState<string>("")
 
   useEffect(() => {
     const token = localStorage.getItem("token")
@@ -40,6 +42,8 @@ export default function EditProfilePage() {
   async function fetchUserProfile() {
     try {
       const token = localStorage.getItem("token")
+      if (!token) throw new Error("Token not found")
+
       const response = await fetch("http://localhost:8080/api/v1/users/me", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -52,6 +56,9 @@ export default function EditProfilePage() {
 
       const data = await response.json()
       setUser(data)
+      setProfilePicture(data.profilePicture || "")
+
+      console.log("Fetched user profile:", data)
     } catch (error) {
       setError(error instanceof Error ? error.message : "Failed to load profile")
     } finally {
@@ -63,18 +70,25 @@ export default function EditProfilePage() {
     event.preventDefault()
     setSaving(true)
     setError("")
-
+  
     try {
       const token = localStorage.getItem("token")
+      if (!token) throw new Error("Token not found")
+      if (!user?.id) throw new Error("User ID not found")  // Add this check
+  
       const formData = new FormData(event.currentTarget)
+  
       const updatedUser = {
         name: formData.get("name"),
         email: formData.get("email"),
         bio: formData.get("bio"),
-        profilePicture: formData.get("profilePicture"),
+        profilePicture: profilePicture || user?.profilePicture || "",
       }
-
-      const response = await fetch("http://localhost:8080/api/v1/users/me", {
+  
+      console.log("Updating profile with:", updatedUser)
+  
+      // Update the endpoint to use the user's ID
+      const response = await fetch(`http://localhost:8080/api/v1/users/${user.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -82,17 +96,18 @@ export default function EditProfilePage() {
         },
         body: JSON.stringify(updatedUser),
       })
-
+  
       if (!response.ok) {
-        throw new Error("Failed to update profile")
+        const errorData = await response.json().catch(() => null)
+        throw new Error(errorData?.message || "Failed to update profile")
       }
-
+  
       toast({
         title: "Success",
         description: "Your profile has been updated",
       })
-
-      router.push("/profile")
+  
+      router.push(`/profile/${user?.username}`)
     } catch (error) {
       setError(error instanceof Error ? error.message : "Failed to update profile")
     } finally {
@@ -149,27 +164,20 @@ export default function EditProfilePage() {
           <form onSubmit={onSubmit} className="space-y-6">
             <div className="space-y-4">
               <div className="space-y-2">
-                <label
-                  htmlFor="profilePicture"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  Profile Picture URL
+                <label className="text-sm font-medium leading-none">
+                  Profile Picture
                 </label>
-                <Input
-                  id="profilePicture"
-                  name="profilePicture"
-                  type="url"
-                  placeholder="https://example.com/avatar.jpg"
-                  defaultValue={user.profilePicture}
-                  disabled={saving}
+                <ImageUpload
+                  onImageUploaded={(imageUrl) => {
+                    console.log("Uploaded image URL:", imageUrl)
+                    setProfilePicture(imageUrl)
+                  }}
+                  defaultImage={user.profilePicture}
                 />
               </div>
 
               <div className="space-y-2">
-                <label
-                  htmlFor="name"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
+                <label htmlFor="name" className="text-sm font-medium leading-none">
                   Full Name
                 </label>
                 <Input
@@ -183,10 +191,7 @@ export default function EditProfilePage() {
               </div>
 
               <div className="space-y-2">
-                <label
-                  htmlFor="email"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
+                <label htmlFor="email" className="text-sm font-medium leading-none">
                   Email
                 </label>
                 <Input
@@ -201,10 +206,7 @@ export default function EditProfilePage() {
               </div>
 
               <div className="space-y-2">
-                <label
-                  htmlFor="bio"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
+                <label htmlFor="bio" className="text-sm font-medium leading-none">
                   Bio
                 </label>
                 <Textarea
@@ -227,7 +229,7 @@ export default function EditProfilePage() {
               >
                 Cancel
               </Button>
-              <Button disabled={saving}>
+              <Button type="submit" disabled={saving}>
                 {saving && (
                   <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-background border-t-foreground" />
                 )}
@@ -240,4 +242,4 @@ export default function EditProfilePage() {
       <Footer />
     </div>
   )
-} 
+}
