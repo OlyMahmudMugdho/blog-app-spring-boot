@@ -4,24 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a2b75039-245e-47d1-9cf3-4584d632e3a7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+    <list default="true" id="a2b75039-245e-47d1-9cf3-4584d632e3a7" name="Changes" comment="fix the errors for building the pages">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/about/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/about/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/auth/forgot-password/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/forgot-password/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/auth/reset-password/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/reset-password/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/contact/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/contact/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/guides/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/guides/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/posts/[id]/edit/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/posts/[id]/edit/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/posts/[id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/posts/[id]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/posts/new/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/posts/new/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/profile/[username]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/[username]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/profile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/settings/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/settings/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/comments.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/comments.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/post-list.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/post-list.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ui/textarea.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/textarea.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/use-toast.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/use-toast.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +47,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "/home/mugdho/Downloads/blog-app-spring-boot/front-end/node_modules/typescript/lib",
+    "ts.external.directory.path": "/opt/idea/plugins/javascript-plugin/jsLanguageServicesImpl/external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -84,8 +68,18 @@
       <option name="presentableId" value="Default" />
       <updated>1738672827561</updated>
       <workItem from="1738672829631" duration="513000" />
-      <workItem from="1738824127272" duration="1298000" />
+      <workItem from="1738824127272" duration="3411000" />
+      <workItem from="1738998109907" duration="12000" />
     </task>
+    <task id="LOCAL-00001" summary="fix the errors for building the pages">
+      <option name="closed" value="true" />
+      <created>1738825860613</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1738825860613</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -95,5 +89,9 @@
         <option value="$PROJECT_DIR$/next.config.js" />
       </list>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fix the errors for building the pages" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix the errors for building the pages" />
   </component>
 </project>

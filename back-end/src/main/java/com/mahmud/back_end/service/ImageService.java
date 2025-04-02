@@ -10,19 +10,15 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 public class ImageService {
 
-    private final Cloudinary cloudinary;
+    private final ImageUploadService imageUploadService;
+
+    public ImageService(AwsImageUploadService imageUploadService) {
+        this.imageUploadService = imageUploadService;
+    }
 
     public String uploadImage(MultipartFile file) throws IOException {
-        String publicId = "blog/" + UUID.randomUUID().toString();
-        
-        Map<?, ?> result = cloudinary.uploader().upload(file.getBytes(), Map.of(
-            "public_id", publicId,
-            "resource_type", "auto"
-        ));
-        
-        return result.get("secure_url").toString();
+        return imageUploadService.uploadImage(file);
     }
 } 
